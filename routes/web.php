@@ -20,3 +20,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\HomeCntroller::class, 'index'])
     ->name( name: 'home');
+
+    Route::get('Posts/{post}', [\App\Http\Controllers\PostController::class, 'show'])
+    ->name( name: 'Posts.show');
