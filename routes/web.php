@@ -20,8 +20,11 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+  })->middleware(['auth'])->name('dashboard');
 //Route::get('/dashboard', [\App\Http\Controllers\CategoryController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,3 +35,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::resource('posts', \App\Http\Controllers\PostController::class);
