@@ -14,7 +14,7 @@
                         @csrf
                         Title:
                         <br />
-                        <input type="text" name="title" value{{$post->title}} class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                        <input type="text" name="title" value="{{ $post->title}}" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
                         <br /><br />
                         Post text:
                         <br />
