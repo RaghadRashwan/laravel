@@ -23,6 +23,7 @@
                         @foreach( $posts as $post )
                             <tr>
                                 <td>{{ $post->title }}</td>
+                                <td>{{ $post->category->name }}</td>
                                 <td>
                                     <a href="{{ route('posts.edit', $post) }}">Edit</a>
                                     <form method="POST" action="{{ route('posts.destroy', $post) }}">
