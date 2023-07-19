@@ -37,3 +37,6 @@ require __DIR__.'/auth.php';
 Route::resource('categories', \App\Http\Controllers\CategoryController::class);
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::resource('posts', \App\Http\Controllers\PostController::class);
+
+Route::get('posts/{post}',
+    [\App\Http\Controllers\PostController::class, 'show'])->name('posts.show');

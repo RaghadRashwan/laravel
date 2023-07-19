@@ -8,14 +8,8 @@ use App\Models\post;
 use App\Models\Category;
 class PostController extends Controller
 {
-    //public function show(Post $post){
-
-        //$post = Post::find(Post $post)
-
-        //return view(view: 'post', compact(var_name: 'post'));
-        //  return view( 'post', compact('post'));
-
-    //}
+     
+    
 
     /**
      * Display a listing of the resource.
@@ -65,7 +59,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('post', compact('post'));
     }
 
     /**
