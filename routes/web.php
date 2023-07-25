@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use Spatie\Permission\Contracts\Permission;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +41,25 @@ require __DIR__.'/auth.php';
 Route::resource('categories', \App\Http\Controllers\CategoryController::class);
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::resource('posts', \App\Http\Controllers\PostController::class);
+//Route::middleware('canEditPost')->resource('posts', \App\Http\Controllers\PostController::class);
+//Route::middleware('permission:canEditPost')->group(function () {
+
+   // Route::get('/posts/{post}', [\App\Http\Controllers\PostController::class, 'edit'])->name('posts.edit');
+//});
 
 Route::get('posts/{post}',
     [\App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+
+Route::resource('roles', \App\Http\Controllers\RolesController::class);
+Route::resource('permissions', PermissionController::class);
+Route::resource('users', UserController::class);
+//Route::get('users/{users}/assign-role',
+  //  [UserController::class, 'assignRole'])->name('users.assignRole');
+//Route::get('users/{users}/give-permission',
+   // [UserController::class, 'givePermission'])->name('users.givePermission');
+Route::post('users/{user}',
+    [UserController::class, 'assignRoleAndPermission'])->name('users.assignRoleAndPermission');
+
+
+            
+    
