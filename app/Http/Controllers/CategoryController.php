@@ -37,6 +37,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required', // Add validation rule for the 'content' field
+        ]);
+
         Category::create([
             'name' => $request->input('name')
         ]);
@@ -75,6 +79,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        $request->validate([
+            'name' => 'required', // Add validation rule for the 'content' field
+        ]);
+    
         $category->update([
             'name' => $request->input('name')
         ]);

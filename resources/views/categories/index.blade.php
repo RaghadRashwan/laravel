@@ -8,8 +8,6 @@
         </h2>
     </x-slot>
 
-    
-
     <div class="py-12 flex justify-center">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -24,7 +22,7 @@
                             <div class="w-full lg:w-2/3 px-4">
                                 <!-- Nested row for non-featured blog posts-->
                                 <div class="flex flex-wrap -mx-4">
-                                    @foreach( $categories as $index => $category )
+                                    @foreach($categories as $category)
                                     <div class="w-full lg:w-1/2 px-4 mb-8">
                                         <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                             <h2 class="mb-4 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">{{ $category->name }}</h2>
@@ -41,6 +39,8 @@
                                                 </form>
                                                 @endcan
                                             </div>
+                                            
+                                           
                                         </div>
                                     </div>
                                     @endforeach
@@ -52,8 +52,10 @@
             </div>
         </div>
     </div>
-    </html>
 </x-app-layout>
+
+
+
 
 
 

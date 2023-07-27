@@ -30,6 +30,10 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required', 
+        ]);
+
         Permission::create([
             'name' => $request->input('name')
         ]);
@@ -57,7 +61,11 @@ class PermissionController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Permission $permission)
-    {
+    { 
+        $request->validate([
+            'name' => 'required', 
+        ]);
+
         $permission->update([
             'name' => $request->input('name')
         ]);

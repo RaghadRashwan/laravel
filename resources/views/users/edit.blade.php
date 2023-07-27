@@ -8,13 +8,22 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                @if ($errors->any())
+                <div class="alert alert-danger bg-red-200 text-red-800 border border-red-800 rounded-md p-4 mb-4">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 <form method="POST" action="{{ route('users.assignRoleAndPermission', ['user' => $user->id]) }}">
                     @csrf
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Name
+                                    Role
                                 </th>
                             </tr>
                         </thead>
@@ -56,6 +65,7 @@
         });
     </script>
 </x-app-layout>
+
 
 
 

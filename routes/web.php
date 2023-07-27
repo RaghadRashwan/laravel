@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolesController;
@@ -59,6 +60,10 @@ Route::resource('users', UserController::class);
    // [UserController::class, 'givePermission'])->name('users.givePermission');
 Route::post('users/{user}',
     [UserController::class, 'assignRoleAndPermission'])->name('users.assignRoleAndPermission');
+
+Route::post('/comments/{post}',
+    [CommentController::class, 'store'])->name('comments.store');
+
 
 
             

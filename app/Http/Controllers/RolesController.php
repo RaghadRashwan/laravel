@@ -38,7 +38,11 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-       
+        $request->validate([
+            'name' => 'required',
+            'permissions[]' =>  'required',                        
+        ]);
+
        $role = Role::create([
         'name' => $request->input('name'),
     ]);
@@ -78,6 +82,11 @@ class RolesController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        $request->validate([
+            'name' => 'required',
+            'permissions[]' =>  'required',                        
+        ]);
+
         $role->update([
             'name' => $request->input('name'),
         ]);

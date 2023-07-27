@@ -82,22 +82,23 @@ class UserController extends Controller
     
     public function assignRoleAndPermission(Request $request, User $user)
     {
+       
         try {
             // Validate the role and permission names against the database records
-            if ($request->has('role') && !Role::where('name', $request->role)->exists()) {
+            if ($request->validate(['role' => 'required',]) && !Role::where('name', $request->role)->exists()) {
                 throw new RoleDoesNotExist();
             }
 
-            if ($request->has('permission') && !Permission::where('name', $request->permission)->exists()) {
+            if ($request->validate(['permission']) && !Permission::where('name', $request->permission)->exists()) {
                 throw new PermissionDoesNotExist();
             }
 
             // Check if the user already has the requested role or permission
-            if ($request->has('role') && $user->hasRole($request->role)) {
+            if ($request->validate(['role' => 'required',]) && $user->hasRole($request->role)) {
                 return redirect()->route('users.index')->with('message', 'Role exists.');
             }
 
-            if ($request->has('permission') && $user->hasPermissionTo($request->permission)) {
+            if ($request->validate(['permission']) && $user->hasPermissionTo($request->permission)) {
                 return redirect()->route('users.index')->with('message', 'Permission exists.');
             }
 

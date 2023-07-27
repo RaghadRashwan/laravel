@@ -6,11 +6,11 @@ use App\Http\Requests\StorePostRequest;
 use Illuminate\Http\Request;
 use App\Models\post;
 use App\Models\Category;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
 class PostController extends Controller
 {
      
-    
-
     /**
      * Display a listing of the resource.
      *
@@ -47,6 +47,10 @@ class PostController extends Controller
             'post_text' => $request->input('post_text'),
             'category_id' => $request->input('category_id')
         ]);
+
+        $user = User::where('email', 'ragad@gmail.com')->first();
+
+        
 
         return redirect()->route('posts.index');
     }
