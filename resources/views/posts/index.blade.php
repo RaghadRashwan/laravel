@@ -44,13 +44,17 @@
                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                                                     </svg>
                                                 </a>
+                                                
                                                 @can('edit post')
+                                                @if(Auth::id() == $post->user->id || auth()->user()->roles->contains('name', 'admin'))
                                                 <a href="{{ route('posts.edit', $post) }}" class="inline-flex items-center px-3 py-2 mt-2 text-sm font-medium text-white bg-green-500 rounded-lg shadow hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                                     Edit
                                                 </a>
                                                 @endcan
-
+                                                @endif
+                                                
                                                 @can('delete post')
+                                                @if(Auth::id() == $post->user->id || auth()->user()->roles->contains('name', 'admin'))
                                                 <form method="POST" action="{{ route('posts.destroy', $post) }}" style="display: inline-block;">
                                                     @csrf
                                                     @method('DELETE')
@@ -59,6 +63,8 @@
                                                     </button>
                                                 </form>
                                                 @endcan
+                        
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

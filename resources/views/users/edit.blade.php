@@ -10,13 +10,13 @@
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 @if ($errors->any())
                 <div class="alert alert-danger bg-red-200 text-red-800 border border-red-800 rounded-md p-4 mb-4">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <form method="POST" action="{{ route('users.assignRoleAndPermission', ['user' => $user->id]) }}">
                     @csrf
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -32,8 +32,11 @@
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <label class="inline-flex items-center">
-                                        <input type="checkbox" name="role" value="{{ $role->name }}" class="role-checkbox rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                        <span class="ml-2">{{ $role->name }}</span>
+                                        <a href="{{ route('users.update', ['user' => $user, 'role' => $role]) }}">
+                                            <input type="checkbox" name="role" value="{{ $role->name }}" class="role-checkbox rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                            @if(in_array($role->id, $user->roles->pluck('id')->toArray())) checked @endif>
+                                            <span class="ml-2">{{ $role->name }}</span>
+                                        </a>
                                     </label>
                                     <br>
                                     <div class="permissions-list hidden">
@@ -47,8 +50,9 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <br>
+                    <div class="mt-4">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Update Role</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -65,6 +69,7 @@
         });
     </script>
 </x-app-layout>
+
 
 
 
