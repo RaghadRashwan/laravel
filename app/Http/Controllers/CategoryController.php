@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -26,6 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+       
         return view('categories.create');
     }
 
@@ -42,7 +44,8 @@ class CategoryController extends Controller
         ]);
 
         Category::create([
-            'name' => $request->input('name')
+            'name' => $request->input('name'),
+            'user_id' => auth()->id(), 
         ]);
 
         return redirect()->route('categories.index');
@@ -67,6 +70,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        if(Auth::id() != $category->user->id && !auth()->user()->roles->contains('name', 'admin')){
+            return abort(code:401);
+        }
        return view('categories.edit', compact('category'));
     }
 
@@ -84,7 +90,8 @@ class CategoryController extends Controller
         ]);
     
         $category->update([
-            'name' => $request->input('name')
+            'name' => $request->input('name'),
+            'user_id' => auth()->id(), 
         ]);
 
         return redirect()->route('categories.index');
@@ -98,6 +105,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if(Auth::id() != $category->user->id && !auth()->user()->roles->contains('name', 'admin')){
+            return abort(code:401);
+        }
        $category->delete();
 
         return redirect()->route('categories.index');
