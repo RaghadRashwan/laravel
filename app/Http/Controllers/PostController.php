@@ -8,8 +8,15 @@ use App\Models\post;
 use App\Models\Category;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('show', 'index');
+    }
      
     /**
      * Display a listing of the resource.
@@ -19,6 +26,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        
 
         return view('posts.index', compact('posts'));
     }
@@ -31,7 +39,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('posts.create', compact('categories'));
+        $users = User::all();
+        
+        return view('posts.create', compact('categories', 'users'));
     }
 
     /**
@@ -42,13 +52,16 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request, Post $post)
     {
+        //dd(auth()->id());
         $post::create([
             'title' => $request->input('title'),
             'post_text' => $request->input('post_text'),
-            'category_id' => $request->input('category_id')
+            'category_id' => $request->input('category_id'),
+            'user_id' => auth()->id(), 
+            
         ]);
 
-        $user = User::where('email', 'ragad@gmail.com')->first();
+        
 
         
 
@@ -74,6 +87,16 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if(Auth::id() != $post->user->id && !auth()->user()->roles->contains('name', 'admin')){
+            return abort(code:401);
+        }
+
+       //if(auth()->user()->roles->contains('name', 'admin')){
+        //    $this->call([
+         //       AuthServiceProvider::class,
+         //   ]);
+      // }
+
         $categories = Category::all();
        return view('posts.edit', compact('post', 'categories'));
     }
@@ -87,10 +110,13 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, Post $post)
     {
+        
         $post->update([
             'title' => $request->input('title'),
             'post_text' => $request->input('post_text'),
-            'category_id' => $request->input('category_id')
+            'category_id' => $request->input('category_id'),
+            'user_id' => auth()->id(), 
+            
         ]);
 
         return redirect()->route('posts.index');
@@ -104,6 +130,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if(Auth::id() != $post->user->id && !auth()->user()->roles->contains('name', 'admin')){
+            return abort(code:401);
+        }
+
        $post->delete();
 
         return redirect()->route('posts.index');
