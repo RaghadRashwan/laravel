@@ -21,6 +21,13 @@ class RoleAndPermissionSeeder extends Seeder
        // $role->givePermissionTo($permission);
        // $permission->assignRole($role);
 
+      $user = User::create([ 
+        'name' => 'admin',
+        'email' => 'admin@gmail.com',
+        'email_verified_at' => now(),
+        'password' => 'aa123456'
+      ] );
+
        // Create roles
        $adminRole = Role::create(['name' => 'admin']);
 
@@ -35,13 +42,14 @@ class RoleAndPermissionSeeder extends Seeder
        Permission::create(['name' => 'delete category']);
 
        // Assign all permissions to the admin role
-       $adminRole->givePermissionTo(Permission::all());
+      // $adminRole->givePermissionTo(Permission::all());
 
-       $user = User::where('email', 'ragad@gmail.com')->first();
-        $editorRole = Role::where('name', 'admin')->first();
+      // $user = User::where('email', 'ragad@gmail.com')->first();
+      //  $editorRole = Role::where('name', 'admin')->first();
 
         // Assign 'editor' role to the user who created the post
-        $user->assignRole($editorRole);
+       // $user->assignRole($editorRole);
+       $user->assignRole($adminRole);
         
     }
 }
