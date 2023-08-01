@@ -66,9 +66,18 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Role $role, User $user)
     {
-        //
+       
+
+        $role->update([
+            'name' => $request->input('name'),
+        ]);
+    
+        $roles = $request->input('roles', []); // Get the selected permission IDs as an array
+        $user->roles()->sync($roles); // Sync the selected permissions with the role
+    
+        
     }
 
     /**
@@ -82,25 +91,25 @@ class UserController extends Controller
     
     public function assignRoleAndPermission(Request $request, User $user)
     {
-       
+        
         try {
+
+            $request->validate(['role' => 'required',                      
+        ]);
             // Validate the role and permission names against the database records
-            if ($request->validate(['role' => 'required',]) && !Role::where('name', $request->role)->exists()) {
+            if ( !Role::where('name', $request->role)->exists()) {
                 throw new RoleDoesNotExist();
             }
 
-            if ($request->validate(['permission']) && !Permission::where('name', $request->permission)->exists()) {
-                throw new PermissionDoesNotExist();
-            }
+            
+            
 
             // Check if the user already has the requested role or permission
-            if ($request->validate(['role' => 'required',]) && $user->hasRole($request->role)) {
+            if ( $user->hasRole($request->role)) {
                 return redirect()->route('users.index')->with('message', 'Role exists.');
             }
 
-            if ($request->validate(['permission']) && $user->hasPermissionTo($request->permission)) {
-                return redirect()->route('users.index')->with('message', 'Permission exists.');
-            }
+            
 
             // Assign the role to the user
             if ($request->has('role')) {
