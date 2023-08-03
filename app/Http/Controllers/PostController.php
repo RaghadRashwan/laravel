@@ -9,13 +9,15 @@ use App\Models\Category;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth')->except('show', 'index');
+        
+        $this->middleware('permission:create post|edit post|delete post')->except('show', 'index');
     }
      
     /**
@@ -50,23 +52,32 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(StorePostRequest $request, Post $post)
     {
-        //dd(auth()->id());
-        $post::create([
+        $imagePath = '';
+        
+        //dd($request);
+        if ($request->hasFile('image') ) {
+            $image = $request->file('image');
+            $imagePath = $image->store('images', 'public'); // Save the image to the "public/images" directory
+        
+            // Storage::put('file.jpg', $image);
+
+           // dd($imagePath);
+        }
+        Post::create([
             'title' => $request->input('title'),
             'post_text' => $request->input('post_text'),
             'category_id' => $request->input('category_id'),
-            'user_id' => auth()->id(), 
+            'user_id' => auth()->id(),
+            'image' => $imagePath, // Store the image path in the 'image' column
             
-        ]);
-
+        ]); 
         
-
-        
-
         return redirect()->route('posts.index');
     }
+    
 
     /**
      * Display the specified resource.
@@ -116,6 +127,7 @@ class PostController extends Controller
             'post_text' => $request->input('post_text'),
             'category_id' => $request->input('category_id'),
             'user_id' => auth()->id(), 
+            'image' => $request->input('image'),
             
         ]);
 
@@ -138,6 +150,19 @@ class PostController extends Controller
 
         return redirect()->route('posts.index');
     }
-}
-    
+
+   // public function storeImage(Request $request){
+   //     $data= new Post;
+
+    //    if($request->file('image')){
+    //        $file= $request->file('image');
+    //        $filename= date('YmdHi').$file->getClientOriginalName();
+    //        $file-> move(public_path('public/Image'), $filename);
+    //        $data['image']= $filename;
+    //    }
+    //    $data->save();
+        //return redirect()->route('images.view');
+       
+//}
+}   
 
