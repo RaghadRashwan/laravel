@@ -13,6 +13,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('permission:create category|edit category|delete category')->except('index');
+        
+    }
     public function index()
     {
         $categories = Category::all();
