@@ -6,7 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Mail\InformAdmin;
 use Spatie\Permission\Contracts\Permission;
+use Illuminate\Http\Request;
+use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +46,7 @@ require __DIR__.'/auth.php';
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('posts/{post}',[\App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+   // Route::get('posts/{post}',[\App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
     Route::resource('categories', \App\Http\Controllers\CategoryController::class);
     Route::resource('posts', \App\Http\Controllers\PostController::class);
     Route::post('/comments/{post}',
@@ -59,5 +63,5 @@ Route::post('users/{user}',
 
 
 });
-            
-    
+           
+   

@@ -32,11 +32,11 @@
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <label class="inline-flex items-center">
-                                        <a href="{{ route('users.update', ['user' => $user, 'role' => $role]) }}">
-                                            <input type="checkbox" name="role" value="{{ $role->name }}" class="role-checkbox rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                       
+                                            <input type="checkbox" name="role[]" value="{{ $role->name }}" class="role-checkbox rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                             @if(in_array($role->id, $user->roles->pluck('id')->toArray())) checked @endif>
                                             <span class="ml-2">{{ $role->name }}</span>
-                                        </a>
+                                        
                                     </label>
                                     <br>
                                     <div class="permissions-list hidden">
@@ -54,6 +54,7 @@
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Update Role</button>
                     </div>
                 </form>
+                
             </div>
         </div>
     </div>
