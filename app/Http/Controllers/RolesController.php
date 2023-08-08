@@ -38,14 +38,16 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request);
         $request->validate([
             'name' => 'required',
-           // 'permissions[]' =>  'required',                        
+            'permissions' =>  'required|array',                        
         ]);
-
+       // dd($request->validate);
        $role = Role::create([
         'name' => $request->input('name'),
     ]);
+    
 
     $permissions = $request->input('permissions', []); // Get the selected permission IDs as an array
     $role->permissions()->sync($permissions); // Sync the selected permissions with the role
