@@ -17,7 +17,10 @@ class PostController extends Controller
     public function __construct()
     {
         
-        $this->middleware('permission:create post|edit post|delete post')->except('show', 'index');
+        
+        $this->middleware('permission:edit post')->only('edit', 'update');
+        $this->middleware('permission:create post')->only('create', 'store' );
+        $this->middleware('permission:delete post')->only('destroy');
     }
      
     /**
