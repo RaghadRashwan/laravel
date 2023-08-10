@@ -124,13 +124,19 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, Post $post)
     {
+        $imagePath = '';
         
+        //dd($request);
+        if ($request->hasFile('image') ) {
+            $image = $request->file('image');
+            $imagePath = $image->store('images', 'public');
+        }
         $post->update([
             'title' => $request->input('title'),
             'post_text' => $request->input('post_text'),
             'category_id' => $request->input('category_id'),
             'user_id' => auth()->id(), 
-            'image' => $request->input('image'),
+            'image' => $imagePath,
             
         ]);
 
