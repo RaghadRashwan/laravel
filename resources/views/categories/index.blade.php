@@ -30,13 +30,13 @@
                                             <h2 class="mb-4 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">{{ $category->name }}</h2>
                                             <div class="flex justify-between items-center">
                                                 @can('edit category')
-                                                @if(Auth::id() == $category->user->id || auth()->user()->roles->contains('name', 'admin'))
+                                                @if(Auth::id() == optional($category->user)->id || auth()->user()->roles->contains('name', 'admin'))
                                                 <a href="{{ route('categories.edit', $category) }}" class="text-sm font-bold text-blue-500 hover:underline">Edit</a>
                                                 @endcan
                                                 @endif
 
                                                 @can('delete category')
-                                                @if(Auth::id() == $category->user->id || auth()->user()->roles->contains('name', 'admin'))
+                                                @if(Auth::id() == optional($category->user)->id || auth()->user()->roles->contains('name', 'admin'))
                                                 <form method="POST" action="{{ route('categories.destroy', $category) }}" style="display: inline-block;">
                                                     @csrf
                                                     @method('DELETE')

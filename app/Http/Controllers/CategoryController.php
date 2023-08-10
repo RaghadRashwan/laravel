@@ -77,7 +77,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        if(Auth::id() != $category->user->id && !auth()->user()->roles->contains('name', 'admin')){
+        if(Auth::id() != optional($category->user)->id && !auth()->user()->roles->contains('name', 'admin')){
             return abort(code:401);
         }
        return view('categories.edit', compact('category'));
@@ -112,7 +112,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if(Auth::id() != $category->user->id && !auth()->user()->roles->contains('name', 'admin')){
+        if(Auth::id() != optional($category->user)->id && !auth()->user()->roles->contains('name', 'admin')){
             return abort(code:401);
         }
        $category->delete();

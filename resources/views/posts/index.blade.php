@@ -44,7 +44,7 @@
                                                 </a>
                                                 
                                                 @can('edit post')
-                                                @if(Auth::id() == $post->user->id || auth()->user()->roles->contains('name', 'admin'))
+                                                @if(Auth::id() == optional($post->user)->id || auth()->user()->roles->contains('name', 'admin'))
                                                 <a href="{{ route('posts.edit', $post) }}" class="inline-flex items-center px-3 py-2 mt-2 text-sm font-medium text-white bg-green-500 rounded-lg shadow hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                                     Edit
                                                 </a>
@@ -52,7 +52,7 @@
                                                 @endif
                                                 
                                                 @can('delete post')
-                                                @if(Auth::id() == $post->user->id || auth()->user()->roles->contains('name', 'admin'))
+                                                @if(Auth::id() == optional($post->user)->id || auth()->user()->roles->contains('name', 'admin'))
                                                 <form method="POST" action="{{ route('posts.destroy', $post) }}" style="display: inline-block;">
                                                     @csrf
                                                     @method('DELETE')

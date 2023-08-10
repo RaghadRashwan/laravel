@@ -101,7 +101,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        if(Auth::id() != $post->user->id && !auth()->user()->roles->contains('name', 'admin')){
+        if(Auth::id() != optional($post->user)->id && !auth()->user()->roles->contains('name', 'admin')){
             return abort(code:401);
         }
 
@@ -145,7 +145,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if(Auth::id() != $post->user->id && !auth()->user()->roles->contains('name', 'admin')){
+        if(Auth::id() != optional($post->user)->id && !auth()->user()->roles->contains('name', 'admin')){
             return abort(code:401);
         }
 
