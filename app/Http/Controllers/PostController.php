@@ -124,6 +124,11 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, Post $post)
     {
+        $request->validate([
+            'title' => 'required', // Add validation rule for the 'content' field
+            'post_text' => 'required',
+        ]);
+
         $imagePath = '';
         
         //dd($request);
